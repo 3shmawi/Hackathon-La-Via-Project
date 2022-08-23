@@ -25,41 +25,29 @@ class FetchSeeds {
 
 class Data {
   Data({
-    required this.plantId,
+    required this.seedId,
     required this.name,
     required this.description,
     required this.imageUrl,
-    required this.waterCapacity,
-    required this.sunLight,
-    required this.temperature,
   });
-  late final String plantId;
+  late final String seedId;
   late final String name;
   late final String description;
   late final String imageUrl;
-  late final int waterCapacity;
-  late final int sunLight;
-  late final int temperature;
 
   Data.fromJson(Map<String, dynamic> json){
-    plantId = json['plantId'];
+    seedId = json['seedId'];
     name = json['name'];
     description = json['description'];
     imageUrl = json['imageUrl'];
-    waterCapacity = json['waterCapacity'];
-    sunLight = json['sunLight'];
-    temperature = json['temperature'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['plantId'] = plantId;
+    _data['seedId'] = seedId;
     _data['name'] = name;
     _data['description'] = description;
     _data['imageUrl'] = imageUrl;
-    _data['waterCapacity'] = waterCapacity;
-    _data['sunLight'] = sunLight;
-    _data['temperature'] = temperature;
     return _data;
   }
 }

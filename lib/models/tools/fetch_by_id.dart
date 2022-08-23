@@ -25,18 +25,18 @@ class FetchToolById {
 
 class Data {
   Data({
-    required this.seedId,
+    required this.toolId,
     required this.name,
     required this.description,
     required this.imageUrl,
   });
-  late final String seedId;
+  late final String toolId;
   late final String name;
   late final String description;
   late final String imageUrl;
 
   Data.fromJson(Map<String, dynamic> json){
-    seedId = json['seedId'];
+    toolId = json['toolId'];
     name = json['name'];
     description = json['description'];
     imageUrl = json['imageUrl'];
@@ -44,7 +44,7 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['seedId'] = seedId;
+    _data['toolId'] = toolId;
     _data['name'] = name;
     _data['description'] = description;
     _data['imageUrl'] = imageUrl;

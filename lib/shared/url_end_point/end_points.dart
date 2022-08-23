@@ -24,7 +24,9 @@ class EndPoint {
   ///plants
   static const String insertPlant = 'api/v1/plants';
   static const String fetchPlant = 'api/v1/plants';
-  static const String fetchPlantById = 'api/v1/plants/:plantId';
+  static String fetchPlantsById(int id) {
+    return 'api/v1/plants/$id';
+  }
 
   ///products
   //blogs
@@ -60,6 +62,5 @@ class EndPoint {
   static const String getMyForums = '/api/v1/forums/me';
 
   ///test token**
-  static const String token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiOWZjMzVmNC0xZThkLTQ0NTktYmY4Mi04ZTFmMWMxYzM2MDAiLCJpYXQiOjE2NjA1MjE4MzksImV4cCI6MTY2MDY5NDYzOX0.CQnJRg4pYx7P2St9ZtjZcJGUO3z4WtCqd4RfjN1FL2A';
+  static const String token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5M2U5NGRkYi1kMDIwLTQzN2YtODY4My01N2VmYzI2OTJmYTgiLCJpYXQiOjE2NjA3MTY3NDAsImV4cCI6MTY2MDg4OTU0MH0.j5T5Sa-0_n3JEDwnX6AjcCGqvEqaJNYPgolizlci6l8';
 }

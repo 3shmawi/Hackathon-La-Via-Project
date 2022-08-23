@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:la_vie_hackathon_project/layout/mobile/layout_mobile/layout_mobile_screen.dart';
 import 'package:la_vie_hackathon_project/shared/cubit/auth_cubit/sign_in/sign_in_cubit.dart';
-import 'package:la_vie_hackathon_project/shared/cubit/auth_cubit/sign_in/sign_in_states.dart';
 import 'package:la_vie_hackathon_project/shared/cubit/auth_cubit/sign_up/sign_up_cubit.dart';
-import 'package:la_vie_hackathon_project/shared/cubit/auth_cubit/sign_up/sign_up_states.dart';
 import 'package:la_vie_hackathon_project/shared/cubit/home_cubit/home_cubit.dart';
-import 'package:la_vie_hackathon_project/shared/cubit/home_cubit/home_states.dart';
-import 'package:la_vie_hackathon_project/shared/image_test.dart';
+import 'package:la_vie_hackathon_project/shared/cubit/logic_cubit/logic_cubit.dart';
+import 'package:la_vie_hackathon_project/shared/network/remote/dio/dio_helper.dart';
+import 'package:la_vie_hackathon_project/shared/shared_preferences/cache_helper.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'modules/mobile/layout_auth/layout_auth_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterNativeSplash.preserve(
+      widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
+  await CacheHelper.init();
+  await DioHelper.init();
   runApp(const MyApp());
 }
 
@@ -18,9 +26,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    String? token = CacheHelper.getData(key: SharedKeys.accessToken);
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SignInCubit>(
+        BlocProvider<LogicCubit>(
+          create: (context) => LogicCubit(),
+        ), BlocProvider<SignInCubit>(
           create: (context) => SignInCubit(),
         ),
         BlocProvider<SignUpCubit>(
@@ -28,53 +40,22 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit()
-            ..getFetchTools()..getToolsBuIdModel(1),
+            ..getFetchTools()
+            ..getFetchSeeds()
+            ..getFetchPlants()
+            ..getGetFiltersModel()
+            ..getFetchPlantsModel()
+            ..getFetchAllBlogsModel()
+            ..getFetchProductsModel()
+            ..getGetCurrentUserModel()
+            ..getFetchProductBlogsModel(),
         ),
       ],
-      child: const MaterialApp(
-        home: Home(),
+      child: MaterialApp(
+        home: (token == null)
+            ? const LayoutAuthScreen()
+            : const LayoutMobileScreen(),
       ),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        var cubit = HomeCubit.get(context);
-        return Scaffold(
-          body: Center(
-            child: SizedBox(
-              height: 100,
-              width: 300,
-              child: ElevatedButton(
-                onPressed: () {
-
-                  cubit.insertTools(
-                    name: "test",
-                    description: 'test description',
-                    imageBase64: imageTest,
-                  );
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.deepOrange,
-                  ),
-                ),
-                child: Text(
-                  'test',
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
