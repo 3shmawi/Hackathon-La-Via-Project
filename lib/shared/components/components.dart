@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:la_vie_hackathon_project/shared/icons/icons.dart';
 
+import '../../modules/mobile/search/search_mobile_screen.dart';
 import 'constants.dart';
 
 Widget defaultButton(
@@ -665,7 +666,8 @@ class DefaultOnePost extends StatelessWidget {
 }
 
 class DefaultSearch extends StatelessWidget {
-  const DefaultSearch({Key? key}) : super(key: key);
+  final bool read;
+  const DefaultSearch({Key? key,this.read =false,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -677,11 +679,13 @@ class DefaultSearch extends StatelessWidget {
         color: Colors.grey[300],
       ),
       child: TextField(
+        readOnly: read,
         textAlignVertical: TextAlignVertical.bottom,
         // textAlign: TextAlign.justify,
         decoration: InputDecoration(
           hintText: 'Search',
-          hintStyle: Theme.of(context).textTheme.caption!.copyWith(height: 1.9),
+          hintStyle:
+              Theme.of(context).textTheme.caption!.copyWith(height: 1.9),
           prefixIcon: Icon(
             IconBroken.search,
             color: Colors.grey,

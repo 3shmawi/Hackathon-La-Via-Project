@@ -11,7 +11,9 @@ class MyCartScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white54,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,

@@ -6,6 +6,7 @@ import 'package:la_vie_hackathon_project/layout/mobile/layout_mobile/plants/layo
 import 'package:la_vie_hackathon_project/layout/mobile/layout_mobile/seeds/layout_seeds_screen.dart';
 import 'package:la_vie_hackathon_project/layout/mobile/layout_mobile/tools/layout_tools_screen.dart';
 import 'package:la_vie_hackathon_project/shared/components/components.dart';
+import 'package:la_vie_hackathon_project/shared/cubit/home_cubit/home_cubit.dart';
 import 'package:la_vie_hackathon_project/shared/cubit/logic_cubit/logic_cubit.dart';
 import 'package:la_vie_hackathon_project/shared/cubit/logic_cubit/logic_states.dart';
 import 'package:la_vie_hackathon_project/shared/icons/icons.dart';
@@ -19,6 +20,7 @@ import '../../../modules/mobile/my_cart/my_cart_screen.dart';
 import '../../../modules/mobile/profile/profile_mobile_screen.dart';
 import '../../../modules/mobile/scan_qr_code/scan_qr_code_screen.dart';
 import '../../../modules/mobile/search/search_mobile_screen.dart';
+import '../../../shared/cubit/home_cubit/home_states.dart';
 import 'all/layout_all_screen.dart';
 
 class LayoutMobileScreen extends StatelessWidget {
@@ -33,7 +35,6 @@ class LayoutMobileScreen extends StatelessWidget {
         var cubit = LogicCubit.get(context);
         return DefaultTabController(
           length: 4,
-          
           child: Scaffold(
             body: Padding(
               padding: const EdgeInsets.fromLTRB(15, 45, 15, 0),
@@ -50,31 +51,39 @@ class LayoutMobileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: DefaultSearch(),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: 50,
-                          child: DefaultElevatedButton(
-                            icon: true,
-                            onPressed: () {},
-                            height: 40,
+                  InkWell(
+                    onTap: () {
+                      defaultNavigate(context, const SearchMobileScreen());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: DefaultSearch(read: true,),
                           ),
-                        ),
-                      ],
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: 50,
+                            child: DefaultElevatedButton(
+                              icon: true,
+                              onPressed: () {
+                                defaultNavigate(context, const MyCartScreen());
+                              },
+                              height: 40,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 40,
                     child: TabBar(
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
                       onTap: (n) {
                         cubit.changeIndexTapBar(n);
                         print(n);
@@ -106,13 +115,16 @@ class LayoutMobileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: TabBarView(
                       children: [
-                        LayoutAllMobileScreen(),
-                        LayoutPlantsMobileScreen(),
-                        LayoutSeedsMobileScreen(),
-                        LayoutToolsMobileScreen(),
+                        BlocProvider<HomeCubit>.value(
+                          value: BlocProvider.of<HomeCubit>(context)..getFetchProductsModel(),
+                          child: const LayoutAllMobileScreen(),
+                        ),
+                        const LayoutPlantsMobileScreen(),
+                        const LayoutSeedsMobileScreen(),
+                        const LayoutToolsMobileScreen(),
                       ],
                     ),
                   ),
@@ -134,7 +146,8 @@ class LayoutMobileScreen extends StatelessWidget {
                 Icon(IconBroken.profile, size: 25),
               ],
               onTap: (index) {
-                if (index == 1) print('yes');
+                if (index == 4) defaultNavigate(context, const ProfileMobileScreen(),);
+                if (index == 2) defaultNavigate(context, const ScanQrCodeScreen(),);
               },
             ),
           ),

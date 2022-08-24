@@ -30,37 +30,37 @@ class EndPoint {
 
   ///products
   //blogs
-  static const String fetchAllBlogs = '/api/v1/products/blogs';
-  static const String fetchProductBlogs = '/api/v1/products/blogs/:id';
+  static const String fetchAllBlogs = 'api/v1/products/blogs';
+  static const String fetchProductBlogs = 'api/v1/products/blogs/:id';
 
 //**
-  static const String insertProduct = '/api/v1/products';
-  static const String fetchProduct = '/api/v1/products';
-  static const String getFilters = '/api/v1/products/filters';
-  static const String fetchOne = '/api/v1/products/:productId';
-  static const String buyProduct = '/api/v1/products/buy';
+  static const String insertProduct = 'api/v1/products';
+  static const String fetchProduct = 'api/v1/products';
+  static const String getFilters = 'api/v1/products/filters';
+  static const String fetchOne = 'api/v1/products/:productId';
+  static const String buyProduct = 'api/v1/products/buy';
 
   ///user
   //me
-  static const String getCurrentUser = '/api/v1/user/me';
-  static const String updateCurrentUser = '/api/v1/user/me';
-  static const String claimFreeSeeds = '/api/v1/user/me/claimFreeSeeds';
+  static const String getCurrentUser = 'api/v1/user/me';
+  static const String updateCurrentUser = 'api/v1/user/me';
+  static const String claimFreeSeeds = 'api/v1/user/me/claimFreeSeeds';
 
 //**
-  static const String getReciept = '/api/v1/user/reciepts/:recieptId';
+  static const String getReciept = 'api/v1/user/reciepts/:recieptId';
 
   ///forums
   //forum id
-  static const String getForumById = '/api/v1/forums/:forumId';
-  static const String createForumComment = '/api/v1/forums/:forumId/comment';
-  static const String likeForum = '/api/v1/forums/:forumId/like';
+  static const String getForumById = 'api/v1/forums/:forumId';
+  static const String createForumComment = 'api/v1/forums/:forumId/comment';
+  static const String likeForum = 'api/v1/forums/:forumId/like';
 
 //**
   static const String getForums =
-      '/api/v1/forums?search=magna ipsum nisi aliquip';
-  static const String createForumPost = '/api/v1/forums';
-  static const String getMyForums = '/api/v1/forums/me';
+      'api/v1/forums?search=magna ipsum nisi aliquip';
+  static const String createForumPost = 'api/v1/forums';
+  static const String getMyForums = 'api/v1/forums/me';
 
   ///test token**
-  static const String token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5M2U5NGRkYi1kMDIwLTQzN2YtODY4My01N2VmYzI2OTJmYTgiLCJpYXQiOjE2NjA3MTY3NDAsImV4cCI6MTY2MDg4OTU0MH0.j5T5Sa-0_n3JEDwnX6AjcCGqvEqaJNYPgolizlci6l8';
+  static const String token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlYjllNzU0ZS01NDI3LTQzNTYtODU5MS1lYzAxNzcwNWZlMWUiLCJpYXQiOjE2NjEzMTc4MDgsImV4cCI6MTY2MTQ5MDYwOH0.t6DFZRvZndj65XMN0DaTuhlOn_D-RnkLprFSSGEvSSs';
 }

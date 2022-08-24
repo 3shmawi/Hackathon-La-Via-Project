@@ -13,4 +13,19 @@ class LogicCubit extends Cubit<LogicStates> {
     index = newIndex;
     emit(ChangeTapBarState());
   }
+
+  List<int> numberOfProducts = [];
+
+  void changeNumberOfProductsIncrement(index) {
+    numberOfProducts[index]++;
+    emit(ChangeNumberOfIncrementState());
+  }
+
+  void changeNumberOfProductsDecrement(index) {
+    if (numberOfProducts[index] > 0) {
+      numberOfProducts[index]--;
+    }
+
+    emit(ChangeNumberOfDecrementState());
+  }
 }

@@ -26,36 +26,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     String? token = CacheHelper.getData(key: SharedKeys.accessToken);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LogicCubit>(
-          create: (context) => LogicCubit(),
-        ), BlocProvider<SignInCubit>(
-          create: (context) => SignInCubit(),
-        ),
-        BlocProvider<SignUpCubit>(
-          create: (context) => SignUpCubit(),
-        ),
-        BlocProvider<HomeCubit>(
-          create: (context) => HomeCubit()
-            ..getFetchTools()
-            ..getFetchSeeds()
-            ..getFetchPlants()
-            ..getGetFiltersModel()
-            ..getFetchPlantsModel()
-            ..getFetchAllBlogsModel()
-            ..getFetchProductsModel()
-            ..getGetCurrentUserModel()
-            ..getFetchProductBlogsModel(),
-        ),
-      ],
-      child: MaterialApp(
-        home: (token == null)
-            ? const LayoutAuthScreen()
-            : const LayoutMobileScreen(),
-      ),
+    return MaterialApp(
+      home: (token == null)
+          ? MultiBlocProvider(
+              providers: [
+                BlocProvider<SignInCubit>(
+                  create: (context) => SignInCubit(),
+                ),
+                BlocProvider<SignUpCubit>(
+                  create: (context) => SignUpCubit(),
+                ),
+              ],
+              child: const LayoutAuthScreen(),
+            )
+          : MultiBlocProvider(
+              providers: [
+                BlocProvider<LogicCubit>(
+                  create: (context) => LogicCubit(),
+                ),
+                BlocProvider<HomeCubit>(
+                    create: (context) =>
+                        HomeCubit()..getFetchProductsModel()..getFetchPlants()..getFetchSeeds()..getFetchTools()),
+              ],
+              child: const LayoutMobileScreen(),
+            ),
     );
   }
 }

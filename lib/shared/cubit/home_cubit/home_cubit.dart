@@ -1,4 +1,4 @@
-
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie_hackathon_project/models/plants/fetch.dart';
 import 'package:la_vie_hackathon_project/models/plants/fetch_by_id.dart';
@@ -9,7 +9,6 @@ import 'package:la_vie_hackathon_project/models/seeds/insert.dart';
 import 'package:la_vie_hackathon_project/models/tools/fetch.dart';
 import 'package:la_vie_hackathon_project/models/tools/fetch_by_id.dart';
 import 'package:la_vie_hackathon_project/models/user/me/get.dart';
-
 
 import '../../../models/products/fetch.dart';
 import '../../../models/products/get_filters.dart';
@@ -52,7 +51,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
       emit(InsertSeedsSuccessState());
     }).catchError((error) {
-      print('error when getting insert seeds data $error');
+      if (error is DioError) print(error.response!.data['message']);
       emit(InsertSeedsErrorState());
     });
   }
@@ -71,7 +70,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print('fetch plants model data ${fetchPlantsModel.type}');
       emit(FetchPlantsSuccessState());
     }).catchError((error) {
-      print('error when getting fetch plants data $error');
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchPlantsErrorState());
     });
   }
@@ -90,7 +89,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print('fetch seeds model data ${fetchSeedsModel.type}');
       emit(FetchSeedsSuccessState());
     }).catchError((error) {
-      print('error when getting fetch seeds data $error');
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchSeedsErrorState());
     });
   }
@@ -124,11 +123,11 @@ class HomeCubit extends Cubit<HomeStates> {
   void getFetchTools() {
     emit(FetchToolsLoadingState());
     DioHelper.getData(urlEndPoint: EndPoint.fetchTools).then((value) {
-      print(value.data['type']);
       fetchToolsModel = FetchTools.fromJson(value.data);
       print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj' + fetchToolsModel.type);
       emit(FetchToolsSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchToolsErrorState());
     });
   }
@@ -159,6 +158,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print(fetchPlantsModelModel.type);
       emit(FetchPlantSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchPlantErrorState());
     });
   }
@@ -173,6 +173,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print(fetchPlantByIdModel.type);
       emit(FetchPlantByIdSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchPlantByIdErrorState());
     });
   }
@@ -189,6 +190,7 @@ class HomeCubit extends Cubit<HomeStates> {
       print(fetchAllBlogsModel.type);
       emit(FetchAllBlogsSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchAllBlogsErrorState());
     });
   }
@@ -205,11 +207,12 @@ class HomeCubit extends Cubit<HomeStates> {
       print(fetchProductBlogsModel.type);
       emit(FetchProductBlogsSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchProductBlogsErrorState());
     });
   }
 
-  late FetchProducts fetchProductsModel;
+   FetchProducts? fetchProductsModel;
 
   void getFetchProductsModel() {
     emit(FetchProductsLoadingState());
@@ -218,9 +221,10 @@ class HomeCubit extends Cubit<HomeStates> {
     ).then((value) {
       print(value.data['type']);
       fetchProductsModel = FetchProducts.fromJson(value.data);
-      print(fetchProductsModel.type);
+      print(fetchProductsModel!.type);
       emit(FetchProductsSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(FetchProductsErrorState());
     });
   }
@@ -237,9 +241,11 @@ class HomeCubit extends Cubit<HomeStates> {
       print(getFiltersModel.type);
       emit(GetFiltersSuccessState());
     }).catchError((error) {
+      if (error is DioError) print(error.response!.data['message']);
       emit(GetFiltersErrorState());
     });
   }
+
   late GetCurrentUser getCurrentUserModel;
 
   void getGetCurrentUserModel() {
@@ -255,4 +261,6 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(GetCurrentUserErrorState());
     });
   }
+
+  List allProduct = [];
 }
